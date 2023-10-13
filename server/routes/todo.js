@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../controller/Ctodo');
 
+// GET /api/todoCount - count todos(read)
+router.get('/todoCount', controller.countTodos);
 // GET /api/todos - show all todos (READ)
 router.get('/todos', controller.readTodos);
 

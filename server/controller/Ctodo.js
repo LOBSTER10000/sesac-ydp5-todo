@@ -1,10 +1,19 @@
 const { Todo } = require('../models');
 const { Op } = require('sequelize');
 
+// GET /api/todos - count all todos (READ)
+exports.countTodos = async (_, res) => {
+  try {
+    let todoCount = await Todo.count();
+    res.send(todoCount);
+  } catch (err) {
+    res.send(err);
+  }
+};
 // GET /api/todos - show all todos (READ)
 exports.readTodos = async (_, res) => {
   try {
-    let todos = await Todo.findAll();
+    let todos = await Todo.findAll({ order: [['id', 'desc']] });
     res.send(todos);
   } catch (err) {
     res.send(err);
@@ -20,8 +29,8 @@ exports.createTodo = async (req, res) => {
       done: false,
     });
     console.log(newTodo);
-    // res.send(newTodo);
-    res.end();
+    res.send(newTodo);
+    // res.end(); //데이터 없이 응답하는 것
   } catch (err) {
     res.send(err);
   }
